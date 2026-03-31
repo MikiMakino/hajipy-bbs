@@ -1,0 +1,15 @@
+# 仮想環境
+myenv/
+
+# データベース
+db.sqlite3
+
+# キャッシュ
+__pycache__/
+*.pyc
+
+# 環境変数ファイル
+.env
+
+# VSCode
+.vscode/

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLUG はじめてのPython勉強会 掲示板</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
+      background: #e8f4fd;
+      min-height: 100vh;
+    }
+
+    .board-header {
+      background: #2d6fa4;
+      padding: 24px 32px 36px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+    }
+    .board-header::after {
+      content: '';
+      position: absolute;
+      bottom: -18px; left: 0; right: 0;
+      height: 20px;
+      background: #e8f4fd;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+
+    .board-header a {
+    color: #ffffff;
+    font-size: 12px;
+    }
+
+    .header-title {
+      color: #fff;
+      font-size: 26px;
+      font-weight: bold;
+    }
+    .header-sub {
+      color: #7dd3f7;
+      font-size: 16px;
+      margin-top: 4px;
+    }
+    .header-penguin {
+      margin-left: auto;
+      font-size: 32px;
+    }
+
+    .board-body {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 32px 16px 40px;
+    }
+
+    .post-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 12px rgba(45,111,164,0.08);
+      border: 1.5px solid #d0e8f7;
+      position: relative;
+      transition: transform 0.15s;
+    }
+    .post-card:hover { transform: translateY(-2px); }
+    .post-card::before {
+      content: '🐧';
+      position: absolute;
+      top: -12px; right: 16px;
+      font-size: 22px;
+    }
+    .post-title {
+      font-size: 17px;
+      font-weight: bold;
+      color: #1a4f80;
+      margin-bottom: 8px;
+    }
+    .post-body {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .post-meta { font-size: 11px; color: #8ab0cc; }
+
+    .btn-new {
+      display: inline-block;
+      background: #2d6fa4;
+      color: #fff;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 8px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+    .btn-new:hover { background: #1a4f80; }
+
+    .footer-penguins {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 22px;
+      letter-spacing: 6px;
+      opacity: 0.35;
+    }
+  </style>
+</head>
+<body>
+  <div class="board-header">
+    <div>
+      <div class="header-title">🐧 PLUG はじPy 掲示板 かじり君 </div>
+      {% if user.is_authenticated %}
+        <p class="header-sub">ようこそ、{{ user.username }} さん！🐧</p>
+        <a href="{% url 'account_logout' %}">ログアウト</a>
+      {% else %}
+        <a href="{% url 'discord_login' %}">Discordでログイン</a>
+      {% endif %}
+    </div>
+    <div class="header-penguin">🐧🐧</div>
+  </div>
+
+  <div class="board-body">
+    {% if user.is_authenticated %}
+      <a href="{% url 'create' %}" class="btn-new">＋ 新規投稿</a>
+    {% endif %}
+
+
+    {% for post in posts %}
+      <div class="post-card">
+        <div class="post-title">{{ post.title }}</div>
+        <div class="post-body">{{ post.body }}</div>
+        <div class="post-meta">🕐 {{ post.created_at }}</div>
+      </div>
+    {% empty %}
+      <p>まだ投稿がありません。最初の投稿をしてみよう！🐧</p>
+    {% endfor %}
+  </div>
+
+  <div class="footer-penguins">🐧 🐧 🐧</div>
+</body>
+</html>
