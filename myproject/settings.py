@@ -39,6 +39,9 @@ ALLOWED_HOSTS = [
     '.azurewebsites.net',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://hajipy-bbs-c0cyg5apfyamdrcy.japanwest-01.azurewebsites.net',
+]
 
 # Application definition
 
